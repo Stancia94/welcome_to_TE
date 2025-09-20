@@ -1,6 +1,6 @@
 interface BallonI {
-    id: number
-    isPublic: boolean
+	id: number
+	isPublic: boolean
 }
 
 /**
@@ -15,7 +15,6 @@ async function fetchBallonAmount(id: BallonI['id']): Promise<number> {
 
 	return new Promise(resolve => setTimeout(() => resolve(RANDOM_AMOUNT), RANDOM_TIMEOUT));
 }
-
 // данные о шариках
 const BALLONS: { [key: string]: BallonI } = {
 	red: {
@@ -45,3 +44,17 @@ const BALLONS: { [key: string]: BallonI } = {
 };
 
 // Ваш код здесь
+
+async function getTotalPublicAmount() {
+	const publicBallons = Object.values(BALLONS).filter(
+		(ballon) => ballon.isPublic
+	);
+	const promises = publicBallons.map((ballon) =>
+		fetchBallonAmount(ballon.id)
+	);
+
+	const amounts = await Promise.all(promises);
+	const totalAmount = amounts.reduce((acc, next) => acc + next, 0);
+	console.log(totalAmount);
+}
+getTotalPublicAmount();

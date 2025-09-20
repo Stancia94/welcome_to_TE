@@ -1,5 +1,30 @@
 import { useState } from "react";
-
+// ( imgSrc, imgAlt ) , (content), (userData)
+export const Block = ({
+  mouseEnterCallbak,
+  imgSrc,
+  imgAlt,
+  content,
+  userData,
+}) => {
+  const [isActive, setActive] = useState(false);
+  const mouseEnterHadler = () => {
+    setActive(true);
+    mouseEnterCallbak();
+  };
+  return (
+    <div onMouseEnter={mouseEnterHadler} className={isActive ? "active" : ""}>
+      {imgSrc && imgAlt && <img src={imgSrc} alt={imgAlt} />}
+      {content && <p>{content}</p>}
+      {userData && (
+        <address>
+          country: {userData.country}, street: {userData.street}
+        </address>
+      )}
+    </div>
+  );
+};
+/*
 export const Block1 = ({ mouseEnterCallbak, imgSrc, imgAlt }) => {
   const [isActive, setActive] = useState(false);
 
@@ -46,3 +71,4 @@ export const Block3 = ({ mouseEnterCallbak, userData }) => {
     </div>
   );
 };
+*/
